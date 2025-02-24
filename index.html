@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Design Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+<style>
+    body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .gradient-bg {
+        background: linear-gradient(135deg, #0EA5E9 0%, #2563EB 100%);
+    }
+</style>
+<body class="bg-slate-50">
+    <nav class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-blue-600">DesignAI Studio</div>
+            <div class="flex gap-4">
+                <button class="px-4 py-2 text-gray-600 hover:text-blue-600">Gallery</button>
+                <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Create New</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">Create Professional Designs with AI</h1>
+            <p class="text-gray-600 text-lg">Transform your ideas into stunning product designs, catalogs, and branding materials</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 mb-12">
+            <div class="bg-white p-6 rounded-xl shadow-sm">
+                <h2 class="text-xl font-semibold mb-4">Design Generator</h2>
+                <textarea id="promptInput" class="w-full p-4 border rounded-lg mb-4 h-32" placeholder="Describe your design needs (e.g., 'Create a minimalist coffee package design with earth tones')"></textarea>
+                <div class="flex gap-4 mb-4">
+                    <select id="designType" class="flex-1 p-2 border rounded-lg">
+                        <option value="product">Product Design</option>
+                        <option value="catalog">Catalog</option>
+                        <option value="packaging">Packaging</option>
+                        <option value="branding">Branding</option>
+                    </select>
+                    <select id="style" class="flex-1 p-2 border rounded-lg">
+                        <option value="modern">Modern</option>
+                        <option value="minimal">Minimal</option>
+                        <option value="luxury">Luxury</option>
+                        <option value="playful">Playful</option>
+                    </select>
+                </div>
+                <button onclick="generateDesign()" class="w-full gradient-bg text-white py-3 rounded-lg hover:opacity-90">Generate Design</button>
+            </div>
+
+            <div id="resultContainer" class="bg-white p-6 rounded-xl shadow-sm">
+                <h2 class="text-xl font-semibold mb-4">Preview</h2>
+                <div id="designPreview" class="h-[300px] bg-gray-100 rounded-lg flex items-center justify-center">
+                    <p class="text-gray-500">Your design will appear here</p>
+                </div>
+                <div class="flex gap-4 mt-4">
+                    <button onclick="downloadDesign()" class="flex-1 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50">Download</button>
+                    <button onclick="saveToGallery()" class="flex-1 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Save to Gallery</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-sm">
+            <h2 class="text-xl font-semibold mb-4">Recent Designs</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="recentDesigns">
+                <!-- Placeholder designs -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Simulated designs for demonstration
+        const designs = [
+            { type: 'product', style: 'modern', color: '#4F46E5' },
+            { type: 'catalog', style: 'minimal', color: '#059669' },
+            { type: 'packaging', style: 'luxury', color: '#B45309' },
+            { type: 'branding', style: 'playful', color: '#DB2777' }
+        ];
+
+        // Generate a design based on input
+        function generateDesign() {
+            const prompt = document.getElementById('promptInput').value;
+            const type = document.getElementById('designType').value;
+            const style = document.getElementById('style').value;
+
+            if (!prompt) {
+                alert('Please enter a design description');
+                return;
+            }
+
+            // Simulate design generation
+            const preview = document.getElementById('designPreview');
+            preview.innerHTML = `
+                <div class="text-center">
+                    <div class="w-32 h-32 rounded-lg mx-auto mb-4" style="background-color: ${designs[Math.floor(Math.random() * designs.length)].color}"></div>
+                    <p class="text-sm text-gray-600">Generated ${type} design in ${style} style</p>
+                </div>
+            `;
+
+            // Add to recent designs
+            updateRecentDesigns();
+        }
+
+        function updateRecentDesigns() {
+            const recentDesigns = document.getElementById('recentDesigns');
+            recentDesigns.innerHTML = designs.map(design => `
+                <div class="aspect-square rounded-lg" style="background-color: ${design.color}">
+                    <div class="w-full h-full flex items-center justify-center text-white">
+                        ${design.type}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function downloadDesign() {
+            alert('Design download started!');
+        }
+
+        function saveToGallery() {
+            alert('Design saved to gallery!');
+        }
+
+        // Initialize recent designs
+        updateRecentDesigns();
+    </script>
+<script>document.body.addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); return }, { passive: false })</script>
+	</body>
+</html>
